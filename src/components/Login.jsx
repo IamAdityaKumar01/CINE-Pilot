@@ -24,23 +24,34 @@ const Login = () => {
         <Header />
       </div>
 
-      <div className="absolute inset-0 flex items-center justify-center z-20 px-4">
+      <div
+        className={`absolute inset-0 flex items-center justify-center z-20 px-4 ${
+          isSignInForm ? "mt-0" : "mt-25"
+        }`}
+      >
         <div className="w-full max-w-md bg-neutral-950 border border-neutral-800 border-t-4 border-t-red-600 rounded-lg shadow-2xl p-8 opacity-85">
           <h2 className="text-3xl font-bold text-white text-center mb-8 tracking-wide">
-            {isSignInForm ? "Welcome Back!" : "Welcome"}
+            {isSignInForm ? "Welcome Back!" : "Welcome!"}
           </h2>
 
           <div className="space-y-5 flex flex-col gap-2 p-4">
+            {!isSignInForm && (
+              <input
+                type="text"
+                placeholder="Full Name"
+                className="w-full px-4 py-3 bg-neutral-800 border border-neutral-700 rounded-md focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 text-white placeholder-neutral-400 transition-colors"
+              />
+            )}
             <input
               type="text"
               placeholder="Email Address"
-              className="w-full px-4 py-3 bg-neutral-900 border border-neutral-800 rounded-md focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 text-white placeholder-neutral-500 transition-colors"
+              className="w-full px-4 py-3 bg-neutral-800 border border-neutral-700 rounded-md focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 text-white placeholder-neutral-400 transition-colors"
             />
-            <div className="input-password w-full flex items-center bg-neutral-900 border border-neutral-800 rounded-md px-4 focus-within:border-red-600 focus-within:ring-1 focus-within:ring-red-600">
+            <div className="input-password w-full flex items-center bg-neutral-800 border border-neutral-700 rounded-md px-4 focus-within:border-red-600 focus-within:ring-1 focus-within:ring-red-600">
               <input
                 type={showPassword}
                 placeholder="Password"
-                className="w-full py-3 bg-transparent text-white placeholder-neutral-500 focus:outline-none"
+                className="w-full py-3 bg-transparent text-white placeholder-neutral-400 focus:outline-none"
               />
               <span
                 className="ml-2 cursor-pointer select-none "
@@ -51,11 +62,11 @@ const Login = () => {
             </div>
 
             {!isSignInForm && (
-              <div className="input-password w-full flex items-center bg-neutral-900 border border-neutral-800 rounded-md px-4 focus-within:border-red-600 focus-within:ring-1 focus-within:ring-red-600">
+              <div className="input-password w-full bg-neutral-800 border border-neutral-700 rounded-md px-4 focus-within:border-red-600 focus-within:ring-1 focus-within:ring-red-600">
                 <input
                   type="password"
                   placeholder="Retype Password"
-                  className="w-full py-3 bg-transparent text-white placeholder-neutral-500 focus:outline-none"
+                  className="w-full py-3 bg-transparent text-white placeholder-neutral-400 focus:outline-none"
                 />
                 <span className="ml-2 cursor-pointer select-none "></span>
               </div>
