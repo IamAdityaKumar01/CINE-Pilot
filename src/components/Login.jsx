@@ -50,8 +50,7 @@ const Login = () => {
               </span>
             </div>
 
-            {isSignInForm *
-            (
+            {!isSignInForm && (
               <div className="input-password w-full flex items-center bg-neutral-900 border border-neutral-800 rounded-md px-4 focus-within:border-red-600 focus-within:ring-1 focus-within:ring-red-600">
                 <input
                   type="password"
