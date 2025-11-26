@@ -7,6 +7,7 @@ const Login = () => {
   let [showPassword, setShowPassword] = useState("password");
   function changeLogin() {
     setisSignInForm(!isSignInForm);
+    setShowPassword("password");
   }
   function handlePasswordClick() {
     setShowPassword(showPassword === "password" ? "text" : "password");
@@ -42,12 +43,25 @@ const Login = () => {
                 className="w-full py-3 bg-transparent text-white placeholder-neutral-500 focus:outline-none"
               />
               <span
-                className="ml-2 cursor-pointer select-none"
+                className="ml-2 cursor-pointer select-none "
                 onClick={handlePasswordClick}
               >
-                👀🙈
+                {showPassword === "password" ? "👀" : "🙈"}
               </span>
             </div>
+
+            {isSignInForm *
+            (
+              <div className="input-password w-full flex items-center bg-neutral-900 border border-neutral-800 rounded-md px-4 focus-within:border-red-600 focus-within:ring-1 focus-within:ring-red-600">
+                <input
+                  type="password"
+                  placeholder="Retype Password"
+                  className="w-full py-3 bg-transparent text-white placeholder-neutral-500 focus:outline-none"
+                />
+                <span className="ml-2 cursor-pointer select-none "></span>
+              </div>
+            )}
+
             <button className="w-full p-3 mt-5 bg-red-600 hover:bg-red-700 text-white font-bold rounded-md transition-all duration-200 shadow-lg tracking-wider text-lg cursor-pointer">
               {isSignInForm ? "Sign In" : "Sign Up"}
             </button>
