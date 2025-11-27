@@ -22,8 +22,9 @@ const Login = () => {
     let result = checkValidationData(
       EmailRef.current.value,
       passwordRef.current.value,
-      nameRef.current.value,
-      retypePasswordRef.current.value
+      nameRef?.current?.value,
+      retypePasswordRef?.current?.value,
+      isSignInForm
     );
 
     setMessage(result);
@@ -47,7 +48,7 @@ const Login = () => {
       >
         <div
           className={`absolute inset-0 flex items-center justify-center z-20 px-4 ${
-            isSignInForm ? "mt-0" : "mt-25"
+            isSignInForm ? "mt-0" : "mt-24"
           }`}
         >
           <div className="w-full max-w-md bg-neutral-950 border border-neutral-800 border-t-4 border-t-red-600 rounded-lg shadow-2xl p-8 opacity-85">
@@ -96,7 +97,7 @@ const Login = () => {
                   <span className="ml-2 cursor-pointer select-none "></span>
                 </div>
               )}
-              <p className="text-red-600 text-sm mt-1 font-medium">{message}</p>
+              <p className="text-red-500 text-sm mt-1  font-bold ">{message}</p>
               <button
                 onClick={handleSubmitButton}
                 className="w-full p-3 mt-5 bg-red-600 hover:bg-red-700 text-white font-bold rounded-md transition-all duration-200 shadow-lg tracking-wider text-lg cursor-pointer"
