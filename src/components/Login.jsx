@@ -33,7 +33,7 @@ const Login = () => {
     );
     setMessage(result);
 
-    if (message) return;
+    if (result) return;
     else if (!isSignInForm) {
       createUserWithEmailAndPassword(
         auth,
