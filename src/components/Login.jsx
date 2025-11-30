@@ -2,11 +2,16 @@ import Header from "./Header";
 import { backgroundURL } from "../assets/Constants";
 import { useRef, useState } from "react";
 import { checkValidationData } from "../assets/validation";
+import { auth } from "../assets/firebase";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 
 const Login = () => {
   let [isSignInForm, setisSignInForm] = useState(true);
   let [showPassword, setShowPassword] = useState("password");
-  let [message, setMessage] = useState(null);
+  let [message, setMessage] = useState();
   let EmailRef = useRef(null);
   let passwordRef = useRef(null);
   let nameRef = useRef(null);
@@ -26,8 +31,45 @@ const Login = () => {
       retypePasswordRef?.current?.value,
       isSignInForm
     );
-
     setMessage(result);
+
+    if (message) return;
+    else if (!isSignInForm) {
+      createUserWithEmailAndPassword(
+        auth,
+        EmailRef.current.value,
+        passwordRef.current.value
+      )
+        .then((userCredential) => {
+          // Signed up
+          const user = userCredential.user;
+          console.log(user);
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setMessage(errorMessage + " : " + errorCode);
+          // ..
+        });
+    } else {
+      signInWithEmailAndPassword(
+        auth,
+        EmailRef.current.value,
+        passwordRef.current.value
+      )
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          console.log(user);
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setMessage(errorMessage + " : " + errorCode);
+        });
+    }
   }
 
   return (
