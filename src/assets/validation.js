@@ -1,7 +1,7 @@
 export const checkValidationData = (
   email,
   password,
-  name = null,
+  name = "",
   retypePassword = null,
   isSignInForm
 ) => {
@@ -15,16 +15,21 @@ export const checkValidationData = (
       password
     );
 
-  if (!isEmailValid) return "Incorrect Gmail";
+  if (!isEmailValid) return "Incorrect Email Address";
   if (!isPasswordValid)
-    return "Incorrect Password (Must include A-Z, a-z, 0-9, and a special symbol, 8+ chars.)";
+    return "Incorrect Password (Must include A-Z, a-z, 0-9, special symbol, 8+ chars)";
 
   if (!isSignInForm) {
-    const isNameValid = /^[A-Za-z]+(?: [A-Za-z]+)*$/.test(name);
-    if (!isNameValid) return "Please enter a valid name using letters only.";
+    const trimmedName = name ? name.trim() : "";
+
+    if (trimmedName.length === 0) return "Name is required.";
+
+    const isNameValid = /^[a-zA-Z\s]+$/.test(trimmedName);
+
+    if (!isNameValid) return "Please enter a valid name (letters only).";
 
     if (password !== retypePassword)
-      return "Password doesn't match. Please try again.";
+      return "Passwords do not match. Please try again.";
   }
 
   return null;
