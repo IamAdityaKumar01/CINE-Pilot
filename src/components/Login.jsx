@@ -10,10 +10,9 @@ import {
 } from "firebase/auth";
 
 import { useDispatch } from "react-redux";
-import appStore from "../assets/appStore";
 import { addUser } from "../assets/userSlice";
 const Login = () => {
-  const dispatch = useDispatch(appStore);
+  const dispatch = useDispatch();
   let [isSignInForm, setisSignInForm] = useState(true);
   let [showPassword, setShowPassword] = useState("password");
   let [message, setMessage] = useState();
@@ -51,7 +50,6 @@ const Login = () => {
 
           updateProfile(auth.currentUser, {
             displayName: nameRef.current.value,
-            photoURL: { logoUrl },
           })
             .then(() => {
               const { uid, email, displayName } = auth.currentUser;
@@ -133,6 +131,7 @@ const Login = () => {
                 ref={EmailRef}
                 type="text"
                 placeholder="Email Address"
+                defaultValue="user1234@gmail.com"
                 className="w-full px-4 py-3 bg-neutral-800 border border-neutral-700 rounded-md focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 text-white placeholder-neutral-400 transition-colors"
               />
               <div className="input-password w-full flex items-center bg-neutral-800 border border-neutral-700 rounded-md px-4 focus-within:border-red-600 focus-within:ring-1 focus-within:ring-red-600">
@@ -140,6 +139,7 @@ const Login = () => {
                   ref={passwordRef}
                   type={showPassword}
                   placeholder="Password"
+                  defaultValue="User@1234"
                   className="w-full py-3 bg-transparent text-white placeholder-neutral-400 focus:outline-none"
                 />
                 <span
