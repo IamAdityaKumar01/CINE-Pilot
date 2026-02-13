@@ -4,23 +4,36 @@ import { signOut } from "firebase/auth";
 import { auth } from "../assets/firebase";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { removeUser } from "../assets/userSlice";
+import { onAuthStateChanged } from "firebase/auth";
+import { addUser } from "../assets/userSlice";
+import { useDispatch } from "react-redux";
 
 const Header = () => {
   const store = useSelector((store) => store.user);
-
-  console.log(store);
-  console.log(store?.displayName);
-
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  useEffect(() => {
+    const unsubscrible = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const { uid, email, displayName } = user;
+        dispatch(addUser({ uid: uid, email: email, displayName: displayName }));
+        navigate("/browse");
+      } else {
+        dispatch(removeUser());
+        navigate("/");
+      }
+    });
+    return () => unsubscrible();
+  }, []);
+
   function handleSignOut() {
     signOut(auth)
-      .then(() => {
-        navigate("/");
-      })
+      .then(() => {})
       .catch((error) => {
         navigate("/error");
       });
-    console.log("header rendered");
   }
   return (
     <div className="w-full bg-black rounded-lg shadow-2xl p-4 opacity-85 border border-b-red-500 flex justify-between">

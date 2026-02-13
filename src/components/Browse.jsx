@@ -13,5 +13,4 @@ const Browse = () => {
     </div>
   );
 };
-
 export default Browse;

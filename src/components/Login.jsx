@@ -8,7 +8,7 @@ import {
   signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+
 import { useDispatch } from "react-redux";
 import appStore from "../assets/appStore";
 import { addUser } from "../assets/userSlice";
@@ -21,7 +21,7 @@ const Login = () => {
   let passwordRef = useRef(null);
   let nameRef = useRef(null);
   let retypePasswordRef = useRef(null);
-  const navigate = useNavigate();
+
   function changeLogin() {
     setisSignInForm(!isSignInForm);
     setShowPassword("password");
@@ -57,12 +57,8 @@ const Login = () => {
               dispatch(
                 addUser({ uid: uid, email: email, displayName: displayName })
               );
-
-              navigate("/browse");
             })
-            .catch((error) => {
-              navigate("/error");
-            });
+            .catch((error) => {});
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -77,7 +73,6 @@ const Login = () => {
       )
         .then((userCredential) => {
           const user = userCredential.user;
-          navigate("/browse");
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -108,7 +103,18 @@ const Login = () => {
             isSignInForm ? "mt-0" : "mt-24"
           }`}
         >
-          <div className="w-full max-w-md bg-neutral-950 border border-neutral-800 border-t-4 border-t-red-600 rounded-lg shadow-2xl p-8 opacity-85">
+          <div
+            className="
+  w-full max-w-md 
+  bg-black/70
+  backdrop-blur-md
+  border border-neutral-800
+  border-t-4 border-t-red-600
+  rounded-lg
+  shadow-2xl
+  p-8
+"
+          >
             <h2 className="text-3xl font-bold text-white text-center mb-8 tracking-wide">
               {isSignInForm ? "Welcome Back!" : "Welcome!"}
             </h2>
