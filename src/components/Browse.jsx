@@ -1,4 +1,3 @@
-import { backgroundURL, logoUrl } from "../assets/Constants";
 import Header from "./Header";
 
 const Browse = () => {

@@ -1,5 +1,5 @@
 import Header from "./Header";
-import { backgroundURL } from "../assets/Constants";
+import { backgroundURL, logoUrl } from "../assets/Constants";
 import { useRef, useState } from "react";
 import { checkValidationData } from "../assets/validation";
 import { auth } from "../assets/firebase";
@@ -35,7 +35,7 @@ const Login = () => {
       passwordRef.current.value,
       nameRef?.current?.value,
       retypePasswordRef?.current?.value,
-      isSignInForm
+      isSignInForm,
     );
     setMessage(result);
 
@@ -44,18 +44,19 @@ const Login = () => {
       createUserWithEmailAndPassword(
         auth,
         EmailRef.current.value,
-        passwordRef.current.value
+        passwordRef.current.value,
       )
         .then((userCredential) => {
           const user = userCredential.user;
 
           updateProfile(auth.currentUser, {
             displayName: nameRef.current.value,
+            photoURL: { logoUrl },
           })
             .then(() => {
               const { uid, email, displayName } = auth.currentUser;
               dispatch(
-                addUser({ uid: uid, email: email, displayName: displayName })
+                addUser({ uid: uid, email: email, displayName: displayName }),
               );
             })
             .catch((error) => {});
@@ -69,7 +70,7 @@ const Login = () => {
       signInWithEmailAndPassword(
         auth,
         EmailRef.current.value,
-        passwordRef.current.value
+        passwordRef.current.value,
       )
         .then((userCredential) => {
           const user = userCredential.user;
