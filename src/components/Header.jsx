@@ -14,8 +14,9 @@ const Header = () => {
   const store = useSelector((store) => store.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   useEffect(() => {
-    const unsubscrible = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         const { uid, email, displayName } = user;
         dispatch(addUser({ uid: uid, email: email, displayName: displayName }));
@@ -25,7 +26,7 @@ const Header = () => {
         navigate("/");
       }
     });
-    return () => unsubscrible();
+    return () => unsubscribe();
   }, []);
 
   function handleSignOut() {
@@ -35,30 +36,33 @@ const Header = () => {
         navigate("/error");
       });
   }
+
   return (
-    <div className="w-full bg-black rounded-lg shadow-2xl p-4 opacity-85 border border-b-red-500 flex justify-between">
+    <div className="fixed top-0 left-0 right-0 z-50 bg-black/50 backdrop-blur-md shadow-2xl border-b border-red-500/50 p-2 sm:p-3 md:p-4 flex justify-between items-center">
       <img
         src={logo}
         alt="CINEPilot Logo"
-        className="w-44 object-contain cursor-pointer transition-transform duration-300 hover:scale-105 drop-shadow-lg"
+        className="w-24 sm:w-32 md:w-44 h-auto object-contain cursor-pointer hover:scale-105 transition-transform"
       />
 
       {store && (
-        <div className="flex justify-between items-center gap-10 ">
-          <div className="displayName text-white">{store?.displayName}</div>
+        <div className="flex items-center gap-1.5 sm:gap-3 md:gap-6">
+          <span className="hidden md:block text-white text-sm md:text-base font-medium truncate max-w-32">
+            {store?.displayName}
+          </span>
+
           <img
-            className="w-7 h-7 cursor-pointer transition-transform duration-300 hover:scale-105"
             src={happy}
+            alt="User avatar"
+            className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full cursor-pointer hover:scale-110 transition-transform"
           />
 
-          <div className="btn">
-            <button
-              onClick={handleSignOut}
-              className="text-white cursor-pointer transition-transform duration-300 hover:scale-105 mr-7"
-            >
-              Sign Out
-            </button>
-          </div>
+          <button
+            onClick={handleSignOut}
+            className="px-2 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2 text-xs sm:text-sm md:text-base text-white font-medium rounded bg-red-600/20 hover:bg-red-600 hover:scale-105 transition-all"
+          >
+            Sign Out
+          </button>
         </div>
       )}
     </div>
